@@ -4,6 +4,8 @@ namespace ConsoleApp1
 {
     class Program
     {
+        public static readonly string SqlCNN = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False; Database=Gama;";
+
         static void Main(string[] args)
         {
 

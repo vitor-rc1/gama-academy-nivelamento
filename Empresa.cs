@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+
 
 namespace ConsoleApp1
 {
@@ -11,7 +13,19 @@ namespace ConsoleApp1
 
         public void CadastrarFuncionario(string nome)
         {
-            funcionarios.Add(new Funcionario() { Nome = nome, Id = funcionarios.Count + 1});
+            using (SqlConnection connection = new SqlConnection(Program.SqlCNN))
+            {
+                connection.Open();
+                var sql = $"insert into Funcionarios(Nome) values(@nome);";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@nome", nome);
+                    command.ExecuteScalar();
+                }
+
+                connection.Close();
+            }
+                funcionarios.Add(new Funcionario() { Nome = nome, Id = funcionarios.Count + 1 });
             Funcionario funcionarioCadastrado = funcionarios[^1];
             Console.WriteLine($"Id: {funcionarioCadastrado.Id} Nome: {funcionarioCadastrado.Nome}");
         }
